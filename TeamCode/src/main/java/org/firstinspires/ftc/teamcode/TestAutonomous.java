@@ -26,7 +26,17 @@ public class TestAutonomous extends LinearOpMode {
         frontRight.setPower(0.4);
         backLeft.setPower(0.4);
         backRight.setPower(0.4);
-        sleep(500);
+        sleep(300);
+        frontLeft.setPower(-0.4);
+        frontRight.setPower(-0.4);
+        backLeft.setPower(-0.4);
+        backRight.setPower(-0.4);
+        sleep(300);
+        frontLeft.setPower(-0.4);
+        frontRight.setPower(0.4);
+        backLeft.setPower(0.4);
+        backRight.setPower(-0.4);
+        sleep(700);
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
