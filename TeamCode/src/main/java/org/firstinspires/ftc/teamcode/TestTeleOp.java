@@ -19,19 +19,20 @@ public class TestTeleOp extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
 
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+
     }
 
     @Override
     public void loop() {
-        double x = gamepad1.left_stick_x * 0.4;
-        double y = -gamepad1.left_stick_y * 0.4;
-        double r = gamepad1.right_stick_x * 0.4;
+        double x = gamepad1.left_stick_x * (gamepad1.right_trigger > 0.2 ? 0.1 : 0.7);
+        double y = -gamepad1.left_stick_y * (gamepad1.right_trigger > 0.2 ? 0.1 : 0.7);
+        double r = gamepad1.right_stick_x * (gamepad1.right_trigger > 0.2 ? 0.1 : 0.7);
 
         frontLeft.setPower(y + r + x);
-        frontRight.setPower(y - r - x);
-        backLeft.setPower(y + r - x);
+        frontRight.setPower(y + r - x);
+        backLeft.setPower(y - r - x);
         backRight.setPower(y - r + x);
 
         if (gamepad1.right_trigger > 0.2) {

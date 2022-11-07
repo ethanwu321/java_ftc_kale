@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous
+@Autonomous(name="TestAutonomous")
 public class TestAutonomous extends LinearOpMode {
     DcMotor frontRight;
     DcMotor frontLeft;
@@ -26,17 +26,7 @@ public class TestAutonomous extends LinearOpMode {
         frontRight.setPower(0.4);
         backLeft.setPower(0.4);
         backRight.setPower(0.4);
-        sleep(300);
-        frontLeft.setPower(-0.4);
-        frontRight.setPower(-0.4);
-        backLeft.setPower(-0.4);
-        backRight.setPower(-0.4);
-        sleep(300);
-        frontLeft.setPower(-0.4);
-        frontRight.setPower(0.4);
-        backLeft.setPower(0.4);
-        backRight.setPower(-0.4);
-        sleep(700);
+        sleep(500);
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
