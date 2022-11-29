@@ -2,14 +2,48 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="TestAutonomous")
+@Autonomous
 public class TestAutonomous extends LinearOpMode {
     DcMotor frontRight;
     DcMotor frontLeft;
     DcMotor backRight;
     DcMotor backLeft;
+    CRServo Claw;
+
+    public void Motors_Forward(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+    public void Motors_Backward(double power) {
+        frontLeft.setPower(-power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+    }
+    public void Motors_Right(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+    }
+    public void Motors_Left(double power) {
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+    }
+    public void Motors_TurnRight(double power){
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+    }
+
 
     @Override
     public void runOpMode() {
@@ -22,11 +56,18 @@ public class TestAutonomous extends LinearOpMode {
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
-        frontLeft.setPower(0.4);
+        Motors_Forward(0.4);
+        sleep(300);
+        frontLeft.setPower(-0.4);
+        frontRight.setPower(-0.4);
+        backLeft.setPower(-0.4);
+        backRight.setPower(-0.4);
+        sleep(300);
+        frontLeft.setPower(-0.4);
         frontRight.setPower(0.4);
         backLeft.setPower(0.4);
-        backRight.setPower(0.4);
-        sleep(500);
+        backRight.setPower(-0.4);
+        sleep(700);
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
