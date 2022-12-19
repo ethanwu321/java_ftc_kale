@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous
-public class TestAutonomous extends LinearOpMode {
+public class AutonomousLeft extends LinearOpMode {
     DcMotor frontRight;
     DcMotor frontLeft;
     DcMotor backRight;
@@ -81,11 +81,18 @@ public class TestAutonomous extends LinearOpMode {
         backLeft.setPower(power*0);
         backRight.setPower(-power);
     }
-    // public void Move_Right(int i, int ticksPerInch) {
-        // frontLeft.setTargetPosition(i*ticksPerInch);
-        // frontRight.setTargetPosition(-i*ticksPerInch);
-        // backLeft.setTargetPosition(i*ticksPerInch);
-        // backRight.setTargetPosition(-i*ticksPerInch);}
+    public void Move_Right(int i, int ticksPerInch) {
+        frontLeft.setTargetPosition(i*ticksPerInch);
+        frontRight.setTargetPosition(-i*ticksPerInch);
+        backLeft.setTargetPosition(i*ticksPerInch);
+        backRight.setTargetPosition(-i*ticksPerInch);
+    }
+    public void Move_Left(int i, int ticksPerInch) {
+        frontLeft.setTargetPosition(-i*ticksPerInch);
+        frontRight.setTargetPosition(i*ticksPerInch);
+        backLeft.setTargetPosition(-i*ticksPerInch);
+        backRight.setTargetPosition(i*ticksPerInch);
+    }
 
         // start by closing claw, lift linear slide one stage,
             // can try to read sleeve or just move the bot to a junction
@@ -99,14 +106,33 @@ public class TestAutonomous extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         SlideL = hardwareMap.get(DcMotor.class, "SlideL");
-        SlideR = hardwareMap.get(DcMotor.class, "SlideR");
+        // SlideR = hardwareMap.get(DcMotor.class, "SlideR");
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
-        Motors_Right(0.4);
-        sleep(1100);
+        Move_Left(34, ticksPerInch);
+       //Motors_Forward(0.4);
+       //sleep(400);
+       //Motors_Backward(0.4);
+       //sleep(400);
+       //Motors_Right(0.4);
+       //sleep(400);
+       //Motors_Left(0.4);
+       //sleep(400);
+       //Motors_TurnRight(0.4);
+       //sleep(400);
+       //Motors_TurnLeft(0.4);
+       //sleep(400);
+       //Motors_ForwardRight(0.4);
+       //sleep(400);
+       //Motors_BackwardLeft(0.4);
+       //sleep(400);
+       //Motors_ForwardLeft(0.4);
+       //sleep(400);
+       //Motors_BackwardRight(0.4);
+       //sleep(400);
 
     }
 
