@@ -107,6 +107,8 @@ public class TestAutonomous extends LinearOpMode {
 
         Motors_Right(0.4);
         sleep(1100);
+        Motors_Forward(0.4);
+        sleep(2200);
 
     }
 
