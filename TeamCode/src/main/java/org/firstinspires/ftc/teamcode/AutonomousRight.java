@@ -1,56 +1,17 @@
-/*
- * Copyright (c) 2021 OpenFTC Team
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.openftc.apriltag.AprilTagDetection;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
-
-import java.util.ArrayList;
-
-@TeleOp
-public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
-{
-    OpenCvCamera camera;
-    AprilTagDetectionPipeline aprilTagDetectionPipeline;
-
+@Autonomous
+public class TestAutonomous extends LinearOpMode {
     DcMotor frontRight;
     DcMotor frontLeft;
     DcMotor backRight;
     DcMotor backLeft;
-    CRServo Claw;
-    DcMotor SlideL;
-    DcMotor SlideR;
-    double diameter = 3.5; // inches
-    double fullRotationTicks = 537.7; // ticks
-    // fullRotationTicks : circumference/*
+    CRServo Claw;/*
  * Copyright (c) 2021 OpenFTC Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -76,6 +37,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -88,7 +50,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class TestAutonomous extends LinearOpMode
+public class AutonomousRight extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -121,17 +83,16 @@ public class TestAutonomous extends LinearOpMode
         backRight.setPower(-power);
     }
     public void Motors_Right(double power) {
-        frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(-power);
-    }
-
-    public void Motors_Left(double power) {
         frontLeft.setPower(power);
         frontRight.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(power);
+    }
+    public void Motors_Left(double power) {
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
     }
     public void Motors_TurnRight(double power){
         frontLeft.setPower(-power);
@@ -329,52 +290,18 @@ public class TestAutonomous extends LinearOpMode
         if(tagOfInterest == null || tagOfInterest.id == middle) {
             Motors_Forward(0.4);
             sleep(1000);
-            Motors_Left(0.4);
-            sleep(900);;
-            Motors_Forward(0.4);
-            sleep(200);
-            SlideL.setPower(0.4);
-            SlideR.setPower(-0.4);
-            sleep(1000);
-            claw.setPosition(0.5);
-            sleep(300);
-            Motors_Backward(0.4);
-            sleep(200);
-            Motors_Right(0.4);
-            sleep(900);
         } else if(tagOfInterest.id == left) {
             Motors_Forward(0.4);
-            sleep(1000);
+            sleep(1050);
             Motors_Left(0.4);
-            sleep(900);;
-            Motors_Forward(0.4);
-            sleep(200);
-            SlideL.setPower(0.4);
-            SlideR.setPower(-0.4);
-            sleep(1000);
-            claw.setPosition(0.5);
-            sleep(300);
-            Motors_Backward(0.4);
-            sleep(200);
-            Motors_Left(0.4);
-            sleep(700);
+            sleep(1300);
         } else if (tagOfInterest.id == right) {
             Motors_Forward(0.4);
-            sleep(1000);
-            Motors_Left(0.4);
-            sleep(900);;
-            Motors_Forward(0.4);
-            sleep(200);
-            SlideL.setPower(0.4);
-            SlideR.setPower(-0.4);
-            sleep(1000);
-            claw.setPosition(0.5);
-            sleep(300);
-            Motors_Backward(0.4);
-            sleep(200);
+            sleep(1050);
             Motors_Right(0.4);
-            sleep(2100);
+            sleep(1300);
         }
+
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         // while (opModeIsActive()) {sleep(20);}
@@ -392,6 +319,11 @@ public class TestAutonomous extends LinearOpMode
     }
 }
 
+    DcMotor SlideL;
+    DcMotor SlideR;
+    double diameter = 3.5; // inches
+    double fullRotationTicks = 537.7; // ticks
+    // fullRotationTicks : circumference
     // 537.7 / (pi * diameter)
     // basically, for 1 ticks, the robot travels 537.7 ticks / (pi * diameter)
     int ticksPerInch = (int) (fullRotationTicks / Math.PI * diameter); // ticks / inch
@@ -425,36 +357,123 @@ public class TestAutonomous extends LinearOpMode
         frontRight.setPower(-power);
         backLeft.setPower(-power);
         backRight.setPower(power);
+    }/*
+ * Copyright (c) 2021 OpenFTC Team
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.apriltag.AprilTagDetection;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+
+import java.util.ArrayList;
+
+@Autonomous
+public class AutonomousLeft extends LinearOpMode
+{
+    OpenCvCamera camera;
+    AprilTagDetectionPipeline aprilTagDetectionPipeline;
+
+    DcMotor frontRight;
+    DcMotor frontLeft;
+    DcMotor backRight;
+    DcMotor backLeft;
+    Servo claw;
+    DcMotor SlideL;
+    DcMotor SlideR;
+    double diameter = 3.5; // inches
+    double fullRotationTicks = 537.7; // ticks
+    // fullRotationTicks : circumference
+    // 537.7 / (pi * diameter)
+    // basically, for 1 ticks, the robot travels 537.7 ticks / (pi * diameter)
+    int ticksPerInch = (int) (fullRotationTicks / Math.PI * diameter); // ticks / inch
+
+
+    public void Motors_Forward(double power) {
+        frontLeft.setPower(-power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
     }
-    public void Motors_TurnLeft(double power){
+    public void Motors_Backward(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(-power);
+    }
+    public void Motors_Right(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(-power);
+        backRight.setPower(power);
+    }
+    public void Motors_Left(double power) {
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         backLeft.setPower(power);
         backRight.setPower(-power);
     }
-    public void Motors_ForwardLeft(double power){
+    public void Motors_TurnRight(double power){
         frontLeft.setPower(-power);
-        frontRight.setPower(power*0);
-        backLeft.setPower(power*0);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
         backRight.setPower(power);
     }
-    public void Motors_ForwardRight(double power){
+    public void Motors_TurnLeft(double power){
+        frontLeft.setPower(power);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+    }
+    public void Motors_ForwardLeft(double power){
         frontLeft.setPower(power*0);
         frontRight.setPower(-power);
         backLeft.setPower(power);
         backRight.setPower(power*0);
     }
-    public void Motors_BackwardLeft(double power){
-        frontLeft.setPower(power*0);
-        frontRight.setPower(power);
-        backLeft.setPower(-power);
-        backRight.setPower(power*0);
+    public void Motors_ForwardRight(double power){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power*0);
+        backLeft.setPower(power*0);
+        backRight.setPower(power);
     }
-    public void Motors_BackwardRight(double power){
+    public void Motors_BackwardLeft(double power){
         frontLeft.setPower(power);
         frontRight.setPower(power*0);
         backLeft.setPower(power*0);
         backRight.setPower(-power);
+    }
+    public void Motors_BackwardRight(double power){
+        frontLeft.setPower(power*0);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(power*0);
     }
     // public void Move_Right(int i, int ticksPerInch) {
     // frontLeft.setTargetPosition(i*ticksPerInch);
@@ -477,9 +496,9 @@ public class TestAutonomous extends LinearOpMode
     double cy = 221.506;
 
     // UNITS ARE METERS
-    double tagsize = 0.166;
+    double tagsize = 0.038;
 
-    //int ID_TAG_OF_INTEREST = 18; // Tag ID 18 from the 36h11 family
+    //int ID_TAG_OF_INTEREST = 277; // Tag ID 18 from the 36h11 family
     // AprilTags:
     // Parking 1 - ID 277
     // Parking 2 - ID 283
@@ -510,7 +529,7 @@ public class TestAutonomous extends LinearOpMode
             @Override
             public void onError(int errorCode)
             {
-
+                System.out.println(errorCode);
             }
         });
 
@@ -530,7 +549,7 @@ public class TestAutonomous extends LinearOpMode
 
                 for(AprilTagDetection tag : currentDetections)
                 {
-                    // if(tag.id == ID_TAG_OF_INTEREST)
+                    if(tag.id == left || tag.id == middle || tag.id ==right)
                     {
                         tagOfInterest = tag;
                         tagFound = true;
@@ -601,30 +620,35 @@ public class TestAutonomous extends LinearOpMode
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        SlideL = hardwareMap.get(DcMotor.class, "SlideL");
-        SlideR = hardwareMap.get(DcMotor.class, "SlideR");
+        claw = hardwareMap.get(Servo.class, "RightClaw");
+        claw.scaleRange(0.5, 1);
+        //clawextension = hardwareMap.get(Servo.class, "ClawExtension");
+        //claw.scaleRange(0.1, 1);
+        SlideL = hardwareMap.get(DcMotorEx.class, "SlideL");
+        SlideR = hardwareMap.get(DcMotorEx.class, "SlideR");
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
         /* Actually do something useful */
+        sleep(1000);
         if(tagOfInterest == null || tagOfInterest.id == middle) {
             Motors_Forward(0.4);
-            sleep(2200);
+            sleep(1000);
         } else if(tagOfInterest.id == left) {
             Motors_Forward(0.4);
-            sleep(1100);
+            sleep(1050);
             Motors_Left(0.4);
-            sleep(2200);
+            sleep(1300);
         } else if (tagOfInterest.id == right) {
             Motors_Forward(0.4);
-            sleep(1100);
+            sleep(1050);
             Motors_Right(0.4);
-            sleep(2200);
+            sleep(1300);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {sleep(20);}
+        // while (opModeIsActive()) {sleep(20);}
     }
 
     void tagToTelemetry(AprilTagDetection detection)
@@ -636,5 +660,81 @@ public class TestAutonomous extends LinearOpMode
         telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
         telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
         telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+    }
+}
+
+    public void Motors_TurnLeft(double power){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(-power);
+    }
+    public void Motors_ForwardLeft(double power){
+        frontLeft.setPower(-power);
+        frontRight.setPower(power*0);
+        backLeft.setPower(power*0);
+        backRight.setPower(power);
+    }
+    public void Motors_ForwardRight(double power){
+        frontLeft.setPower(power*0);
+        frontRight.setPower(-power);
+        backLeft.setPower(power);
+        backRight.setPower(power*0);
+    }
+    public void Motors_BackwardLeft(double power){
+        frontLeft.setPower(power*0);
+        frontRight.setPower(power);
+        backLeft.setPower(-power);
+        backRight.setPower(power*0);
+    }
+    public void Motors_BackwardRight(double power){
+        frontLeft.setPower(power);
+        frontRight.setPower(power*0);
+        backLeft.setPower(power*0);
+        backRight.setPower(-power);
+    }
+    // public void Move_Right(int i, int ticksPerInch) {
+        // frontLeft.setTargetPosition(i*ticksPerInch);
+        // frontRight.setTargetPosition(-i*ticksPerInch);
+        // backLeft.setTargetPosition(i*ticksPerInch);
+        // backRight.setTargetPosition(-i*ticksPerInch);}
+
+        // start by closing claw, lift linear slide one stage,
+            // can try to read sleeve or just move the bot to a junction
+
+
+
+    @Override
+    public void runOpMode() {
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        SlideL = hardwareMap.get(DcMotor.class, "SlideL");
+        SlideR = hardwareMap.get(DcMotor.class, "SlideR");
+
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        waitForStart();
+
+        Motors_Right(0.4);
+        sleep(1100);
+        Motors_Forward(0.4);
+        sleep(2200);
+
+    }
+
+    public void SlideUp(int inches) {
+        SlideL.setTargetPosition(inches * ticksPerInch); // set a target tick position
+        SlideL.setPower(0.4);
+        SlideR.setPower(0.4);
+        while (SlideR.isBusy()) {}
+        while (SlideL.isBusy()) {} // when its moving, loop
+        // it "stalls" the code while the left motor is moving
+        SlideL.setPower(0);
+        SlideR.setPower(0);
+        // now computer can continue
+        // here, the linear slide has reached the target position
+        // add the claw
     }
 }
